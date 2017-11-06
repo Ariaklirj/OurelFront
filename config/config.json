@@ -1,0 +1,36 @@
+{
+  "staging": {
+    "EnvironmentConfig": {
+      "site": {
+        "debug": true,
+        "staging":true,
+        "rest": {
+          "baseUrl": "http://api-staging.com/"
+        },
+        "oauth": {
+          "clientId": "123456789qwertyuiopasdfghjkl123456789"
+        },
+        "sentry": {
+          "dsn": "http://123456789qwertyuiopasdfghjkl123456789@sentry.app.com/62"
+        }
+      }
+    }
+  },
+  "production": {
+    "EnvironmentConfig": {
+      "site": {
+        "debug": false,
+        "staging":false,
+        "rest": {
+          "baseUrl": "http://api-prod.com/"
+        },
+        "oauth": {
+          "clientId": "123456789qwertyuiopasdfghjkl123456789"
+        },
+        "sentry": {
+          "dsn": "http://123456789qwertyuiopasdfghjkl123456789@sentry.app.com/63"
+        }
+      }
+    }
+  }
+}

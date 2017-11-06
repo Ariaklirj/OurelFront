@@ -1,0 +1,44 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul side-navigation class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+
+        <div class="profile-element" uib-dropdown>
+          <img alt="{{userInfo.email}}" class="img-circle" gravatar-src="'{{userInfo.email}}'" gravatar-size="48">
+          <a href>
+            <span class="clear">
+              <span class="text-xs block m-t-xs">{{ userInfo.nombre }}</span>
+              <span class="block">
+                <strong class="font-bold">{{ userInfo.correoElectronico }}</strong>
+              </span>
+            </span>
+          </a>
+          <ul uib-dropdown-menu class="animated flipInX m-t-xs">
+            <li><a href="">Salir</a></li>
+          </ul>
+        </div>
+        <div class="logo-element">
+          C
+        </div>
+
+      </li>
+
+      <li ui-sref-active="active">
+        <a ui-sref="i.main"><i class="fa fa-home"></i> <span class="nav-label">Inicio</span> </a>
+      </li>
+
+      <li class="">
+                       <a href="#"><i class="fa fa-pie-chart"></i> <span class="nav-label">Historia</span><span class="fa arrow"></span></a>
+                       <ul class="nav nav-second-level collapse">
+                           <li ui-sref-active="active"><a ui-sref="i.oport ">Escribir</a></li>
+
+                       </ul>
+                   </li>
+      <!-- <li ui-sref-active="active" ng-if="hasPerm('products.read.all')">
+        <a ui-sref="i.config"><i class="fa fa-cogs"></i> <span class="nav-label">Configuración</span></a>
+      </li> -->
+
+    </ul>
+
+  </div>
+</nav>

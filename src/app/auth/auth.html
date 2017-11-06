@@ -1,0 +1,117 @@
+<div class="loginColumns animated fadeIn">
+  <div class="row">
+
+    <div class="col-md-6  text-white">
+      <h2 class="font-bold">Webapp</h2>
+
+      <p>
+        Perfectly designed and precisely prepared with over 50 pages with extra new web app views.
+      </p>
+
+      <p>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+      </p>
+
+      <p>
+        When an unknown printer took a galley of type and scrambled it to make a type specimen book.
+      </p>
+
+      <p>
+        <small>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</small>
+      </p>
+
+    </div>
+    <div class="col-md-6">
+      <div class="ibox-content">
+
+        <!-- <img class="center-block" src="..\assets\images\logo.png" > -->
+        <p class="text-center"><i class="fa fa-skyatlas fa-15x"></i></p>
+
+
+        <form class="m-t-sm" ng-submit="auth.login()" name="login" id="login">
+          <div class="form-group">
+            <input id="username" required type="text" class="form-control" placeholder="Usuario" ng-model="auth.credentials.username" >
+          </div>
+          <div class="form-group">
+            <input id="password" required type="password" class="form-control" placeholder="Contraseña" ng-model="auth.credentials.contrasenia" >
+          </div>
+          <div class="form-group text-center" ng-if="auth.loading">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw m-t-sm"></i>
+            <!-- <i class="fa fa-refresh fa-spin fa-3x m-t-sm"></i> -->
+          </div>
+
+          <button class="btn btn-success btn-block m-b-lg" ng-disabled="!login.$valid" ng-hide="auth.loading">Iniciar sesión</button>
+        </form>
+
+        <div class="alert alert-danger animated shake" ng-if="auth.error" ng-bind="auth.error">
+        </div>
+
+        <p class="m-t-lg">
+          <!-- <small>Inspinia we app framework base on Bootstrap 3 © 2014</small> -->
+        </p>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row text-white">
+    <div class="col-md-6">
+      Webapp Inc.
+    </div>
+    <div class="col-md-6 text-right">
+      <small>© 2017</small>
+    </div>
+  </div>
+</div>
+
+
+
+<!--
+<div id="login-page">
+
+<div class="login login-with-news-feed">
+
+<div class="news-feed">
+<div class="news-image">
+<img src="https://s3.amazonaws.com/hermit-stg-storage/static/bg-2.jpg" />
+</div>
+<div class="news-caption">
+<h4 class="caption-title"><i class="fa fa-connectdevelop text-success"></i> Administrador de Heimdal <span class="text-danger" ng-show="$root.isTest"> (PRUEBAS) </span></h4>
+<p>
+Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+</p>
+</div>
+</div>
+
+<div class="right-content">
+
+<div class="login-header">
+<img src="https://s3.amazonaws.com/hermit-stg-storage/static/logoCompartamos_356x59.png" />
+</div>
+
+<div class="login-content">
+<form  class="margin-bottom-0" ng-submit="auth.login()" name="lossgin" novalidate>
+<div class="form-group m-b-15">
+<input id="username" required type="text" class="form-control input-lg" placeholder="Usuario" ng-model="auth.credentials.username"/>
+</div>
+<div class="form-group m-b-15">
+<input id="password" required type="password" class="form-control input-lg" placeholder="Contraseña" ng-model="auth.credentials.contrasenia"/>
+</div>
+<div class="alert alert-danger animated shake" ng-if="auth.error" ng-bind="auth.error">
+</div>
+<div class="login-buttons">
+<button class="btn btn-success btn-block btn-lg" ng-disabled="!login.$valid">Iniciar sesión</button>
+</div>
+<div class="m-t-20 m-b-40 p-b-40">
+</div>
+<hr />
+<p class="text-center text-inverse">
+
+</p>
+</form>
+</div>
+
+</div>
+
+</div>
+
+</div> -->

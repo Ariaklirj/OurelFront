@@ -1,0 +1,280 @@
+/**
+*  Do not remove this comments bellow. It's the markers used by wiredep to inject
+*  less dependencies when defined in the bower.json of your dependencies
+*/
+// bower:less
+// endbower
+
+/**
+*  If you want to override some bootstrap variables, you have to change values here.
+*  The list of variables are listed here bower_components/bootstrap/less/variables.less
+*/
+@navbar-inverse-link-color: #5AADBB;
+
+/**
+*  Font-Awesome support
+*  Source: https://github.com/Swiip/generator-gulp-angular/issues/337
+*/
+
+@import "../../bower_components/fontawesome/less/font-awesome.less";
+@fa-font-path: "../../bower_components/fontawesome/fonts";
+
+@import '../../bower_components/bootstrap/less/bootstrap.less';
+@icon-font-path: '../../bower_components/bootstrap/fonts/';
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+.thumbnail {
+  height: 200px;
+
+  img.pull-right {
+    width: 50px;
+  }
+}
+
+.nav-header {
+  background: url("../assets/images/patterns/4.png") no-repeat;
+}
+
+@nav-profil-pattern: url("../assets/images/patterns/4.png") no-repeat;
+
+@import "less/style";
+
+.fa-10x {
+  font-size: 10em;
+}
+
+.fa-15x {
+  font-size: 15em;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.label-circle {
+  border-radius: 100%;
+  padding: 4px 7px !important;
+}
+
+.sel-pag {
+  width: 63px !important;
+}
+
+// .angular-icheck {
+//   overflow: hidden;
+// }
+// .angular-icheck .checkbox {
+//   width: 22px;
+//   height: 22px;
+//   min-height: 22px;
+//   display: inline-block;
+//   vertical-align: middle;
+//   background: url("../assets/images/patterns/angular-icheck.png") no-repeat left;
+// }
+// .angular-icheck .checkbox.checked {
+//   background-position: -48px 0;
+// }
+// .angular-icheck .labele {
+//   display: inline-block;
+//   vertical-align: middle;
+// }
+
+
+/* iCheck plugin Square skin
+----------------------------------- */
+.icheckbox_square,
+.iradio_square {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  width: 22px;
+  height: 22px;
+  background: url('../assets/images/patterns/angular-icheck.png') no-repeat;
+  border: none;
+  cursor: pointer;
+}
+
+.icheckbox_square {
+  background-position: 0 0;
+}
+.icheckbox_square.hover {
+  background-position: -24px 0;
+}
+.icheckbox_square.checked {
+  background-position: -48px 0;
+}
+.icheckbox_square.disabled {
+  background-position: -72px 0;
+  cursor: default;
+}
+.icheckbox_square.checked.disabled {
+  background-position: -96px 0;
+}
+
+.iradio_square {
+  background-position: -120px 0;
+}
+.iradio_square.hover {
+  background-position: -144px 0;
+}
+.iradio_square.checked {
+  background-position: -168px 0;
+}
+.iradio_square.disabled {
+  background-position: -192px 0;
+  cursor: default;
+}
+.iradio_square.checked.disabled {
+  background-position: -216px 0;
+}
+
+.capitalized { text-transform: capitalize; }
+
+.img-responsive {
+    margin: 0 auto;
+}
+
+.bw {
+  word-wrap: break-word;
+}
+
+.w-30 {
+  width: 30px;
+}
+
+.w-100 {
+  width: 100px;
+}
+
+table {
+   table-layout: fixed;
+}
+
+th, td {
+   word-wrap: break-word;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+//////////////////////////////7
+
+/*      Step Indicator       */
+@danger-color: #ff3b30;
+@info-color: #1c84c6;
+@mercury: #e5e5e5;
+@success-color: #05AE0E;
+@white: #ffffff;
+
+.step-indicator {
+  border-collapse: separate;
+  display: table;
+  margin-left: 0px;
+  position: relative;
+  table-layout: fixed;
+  vertical-align: middle;
+  li {
+    display: table-cell;
+    float: none;
+    padding: 0;
+    width: 1%;
+    &:before {
+      background-color: @mercury;
+      content: "";
+      display: block;
+      height: 1px;
+      position: relative;
+      top: 18px;
+    }
+    &:first-child {
+      &:before {
+        left: 50%;
+      }
+    }
+    &:last-child {
+      &:before {
+        right: 50%;
+      }
+    }
+  }
+  .active {
+    .step {
+      border-color: @info-color;
+      color: @info-color;
+    }
+    .caption {
+      color: @info-color;
+    }
+  }
+  .complete {
+    .step {
+      border-color: @success-color;
+      color: @success-color;
+    }
+    .caption {
+      color: @success-color;
+    }
+  }
+  .incomplete {
+    .step {
+      border-color: @danger-color;
+      color: @danger-color;
+    }
+    .caption {
+      color: @danger-color;
+    }
+  }
+  .active.complete {
+    .step {
+      border-color: @info-color;
+      color: @info-color;
+    }
+    .caption {
+      color: @info-color;
+    }
+  }
+  .inactive {
+    .caption {
+      color: @mercury;
+    }
+  }
+  .step {
+    background-color: @white;
+    border: 1px solid @mercury;
+    color: @mercury;
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    line-height: 35px;
+    border-radius: 18px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .caption {
+    box-sizing: border-box;
+    color: @mercury;
+    padding: 11px 16px;
+  }
+}
+
+
+/**
+*  Do not remove this comments bellow. It's the markers used by gulp-inject to inject
+*  all your less files automatically
+*/
+// injector
+// endinjector
