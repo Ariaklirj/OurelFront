@@ -17,9 +17,7 @@
 
     Restangular.setFullRequestInterceptor(function (element, operation, route, url, headers, params, httpConfig) {
 
-      if (Auth.isAuthenticated()) {
-        headers.Authorization = 'Token ' + Auth.getToken();
-      }
+    
       return {
         element: element,
         headers: headers,

@@ -1,0 +1,42 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-9">
+    <h2>Bienvenido</h2>
+    <ol class="breadcrumb">
+      <li class="active">
+        <strong>Inicio</strong>
+      </li>
+    </ol>
+  </div>
+</div>
+<div class="wrapper wrapper-content animated fadeIn"ng-controller="AdministradorController as vm" >
+  
+ 
+  <div class="ibox-content">
+      <div class="row">
+          <div class="col-md-2">
+              
+          </div>
+        <div class="col-md-8">
+            <button type="button" class="btn btn-w-m btn-primary">Nuevo Capitulo</button>
+        </div>
+        
+      </div>
+  </div>
+  
+  <div class="ibox-content">
+      <div class="row">
+          <div class="col-md-2">
+              
+          </div>
+        <div class="col-md-4">
+            <button type="button" ng-click="vm.actualizar()"class="btn btn-w-m btn-primary">Liberar capitulo</button>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control m-b" ng-model="vm.capitulo_seleccionado"ng-options="chapter.index as chapter.chapter_name for chapter in vm.capitulos" id="chapters">
+                <option value="">Seleccione</option>
+            </select>
+        </div>
+      </div>
+  </div>
+
+</div>

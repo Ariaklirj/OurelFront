@@ -22,7 +22,11 @@
     .state('i.main', {
       url: "inicio/",
       templateUrl: "app/main/main.html"
-    });
+    })
+    .state('i.admin', {
+      url: "Admin/",
+      templateUrl: "app/administrador/administrador.html"
+    });;
 
     $urlRouterProvider.when('', '/inicio/');
     $urlRouterProvider.otherwise('/inicio/');

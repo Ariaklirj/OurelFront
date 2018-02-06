@@ -5,7 +5,7 @@
         "debug": true,
         "staging":true,
         "rest": {
-          "baseUrl": "http://api-staging.com/"
+          "baseUrl": "http://localhost:1337"
         },
         "oauth": {
           "clientId": "123456789qwertyuiopasdfghjkl123456789"
