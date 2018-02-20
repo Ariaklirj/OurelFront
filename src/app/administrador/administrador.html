@@ -8,35 +8,49 @@
     </ol>
   </div>
 </div>
-<div class="wrapper wrapper-content animated fadeIn"ng-controller="AdministradorController as vm" >
-  
- 
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="AdministradorController as vm">
+
+
   <div class="ibox-content">
-      <div class="row">
-          <div class="col-md-2">
-              
-          </div>
-        <div class="col-md-8">
-            <button type="button" class="btn btn-w-m btn-primary">Nuevo Capitulo</button>
-        </div>
-        
+    <div class="row">
+      <div class="col-md-2">
+
       </div>
+      <div class="col-md-8">
+        <button type="button" class="btn btn-w-m btn-primary" add-chapter>Nuevo Capitulo</button>
+      </div>
+
+    </div>
   </div>
-  
+
   <div class="ibox-content">
-      <div class="row">
-          <div class="col-md-2">
-              
-          </div>
-        <div class="col-md-4">
-            <button type="button" ng-click="vm.actualizar()"class="btn btn-w-m btn-primary">Liberar capitulo</button>
-        </div>
-        <div class="col-md-4">
-            <select class="form-control m-b" ng-model="vm.capitulo_seleccionado"ng-options="chapter.index as chapter.chapter_name for chapter in vm.capitulos" id="chapters">
-                <option value="">Seleccione</option>
-            </select>
-        </div>
+    <div class="row">
+      <div class="col-md-2">
+
       </div>
+      <div class="col-md-4">
+        <button type="button" ng-click="vm.actualizar()" class="btn btn-w-m btn-primary">Liberar capitulo</button>
+      </div>
+      <div class="col-md-4">
+        <select class="form-control m-b" ng-model="vm.capitulo_seleccionado" ng-options="chapter.index as chapter.chapter_name for chapter in vm.capitulos"
+          id="chapters">
+          <option value="">Seleccione</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="ibox-content">
+    <div class="row">
+      <div class="col-md-2">
+
+      </div>
+      <div class="col-md-8">
+        <button ui-sref="i.estatus " type="button" class="btn btn-w-m btn-primary">Nuevo Estatus</button>
+
+      </div>
+
+    </div>
   </div>
 
 </div>

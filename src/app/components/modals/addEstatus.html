@@ -1,0 +1,87 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">Nuevo usuario</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <div class="row">
+    <form name="frmnew">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Nombre del estatus
+              <span class="text-danger">*</span>
+            </label>
+            <input required type="text" class="form-control" ng-model="vm.name">
+            <span class="error text-danger " ng-show="vm.spanTitle">Requiere un titulo</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Selecciona capitulo
+              <span class="text-danger">*</span>
+            </label>
+            <select class="form-control m-b" ng-model="vm.capitulo_seleccionado" ng-change="vm.cambioCapitulo()" ng-options="chapter.index as chapter.chapter_name for chapter in vm.capitulos"
+              id="chapters">
+              <option value="">Seleccione</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Selecciona estatus anterior
+              <span class="text-danger">*</span>
+            </label>
+            <select ng-disabled="vm.disableEstatusSelect"class="form-control m-b" ng-change="vm.cambioEstatus()" ng-model="vm.estatus_seleccionado" ng-options="estatus.index as estatus.title for estatus in vm.estatus"
+              id="chapters">
+              <option value="">Seleccione</option>
+            </select>
+            <span class="error text-danger " ng-show="vm.disableSpanEstatus">No hay estatus anteriores </span>
+            <span class="error text-danger " ng-show="vm.SpanEstatusNoSeleccionado">Seleccione el estatus anterior</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Es el primer estatus 
+              <span class="text-danger">*</span>
+            </label>
+            <input ng-disabled="vm.disablePrimerEstatus" type="checkbox"ng-checked="vm.primerEstatus" ng-change="vm.cambioPrimerEstaus()" ng-model="vm.primerEstatus"id="checkPrimerEstatus">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Es inicio unico 
+              <span class="text-danger">*</span>
+            </label>
+            <input ng-disabled="vm.disableInicioUnico"  type="checkbox"ng-checked="vm.InicioUnico" ng-change="vm.cambioInicioUnico()"ng-model="vm.InicioUnico"id="checkInicioUnico">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Es estatus final 
+              <span class="text-danger">*</span>
+            </label>
+            <input  ng-disabled="vm.disableEstatusFinal" type="checkbox"ng-checked="vm.EstatusFinal"  ng-change="vm.cambioEstatusFinal()"ng-model="vm.EstatusFinal"id="checkEstatusFinal">
+          </div>
+        </div>
+      </div>
+
+     
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancelar</button>
+  <button class="btn btn-success" type="button" ng-click="vm.ok()" ng-disabled="!frmnew.$valid">Guardar</button>
+</div>
