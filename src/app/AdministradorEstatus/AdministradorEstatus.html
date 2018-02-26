@@ -1,77 +1,132 @@
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-9">
-        <h2>Bienvenido</h2>
-        <ol class="breadcrumb">
-            <li class="active">
-                <strong>Inicio</strong>
-            </li>
-        </ol>
-    </div>
+  <div class="col-lg-9">
+    <h2>Bienvenido</h2>
+    <ol class="breadcrumb">
+      <li class="active">
+        <strong>Inicio</strong>
+      </li>
+    </ol>
+  </div>
 </div>
 <div class="wrapper wrapper-content animated fadeIn" ng-controller="AdministradorEstatusController as vm">
-    <div class="ibox-content">
-        <div class="row">
-            <div class="col-md-4">
-                <button type="button" class="btn btn-w-m btn-primary" add-estatus>Crear Estatus</button>
-            </div>
-
-        </div>
-    </div>
+  <div class="ibox-content">
     <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label>Selecciona capitulo
-              <span class="text-danger">*</span>
-            </label>
-            <select class="form-control m-b" ng-model="vm.capitulo_seleccionado" ng-change="vm.cambioCapitulo()" ng-options="chapter.index as chapter.chapter_name for chapter in vm.capitulos"
-              id="chapters">
-              <option value="">Seleccione</option>
-            </select>
-          </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-w-m btn-primary" add-estatus>Crear Estatus</button>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="ibox-content">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Selecciona capitulo
+            <span class="text-danger">*</span>
+          </label>
+          <select class="form-control m-b" ng-model="vm.capitulo_seleccionado" ng-change="vm.cambioCapitulo()" ng-options="chapter.index as chapter.chapter_name for chapter in vm.capitulos"
+            id="chapters">
+            <option value="">Seleccione</option>
+          </select>
         </div>
       </div>
-    <div class="ibox-content">
-
-        <div class="row">
-
-            <div class="col-md-4">
-                <select ng-disabled="vm.disableEstatusSelect"class="form-control m-b" ng-change="vm.cambioEstatus()" ng-model="vm.estatus_seleccionado" ng-options="estatus.index as estatus.title for estatus in vm.estatus"
-              id="chapters">
-              <option value="">Seleccione</option>
-            </select>
-            </div>
-            <div class="col-md-8">
-                <button type="button" class="btn btn-w-m btn-primary" add-chapter>Editar Estatus</button>
-            </div>
-        </div>
     </div>
-    <div class="ibox-content">
-        <div class="row">
-            <form name="formEditStatus">
-                <div class="ibox-content">
+    <div class="row">
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Descripcion de Estatus</label>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                            
-                                    <textarea  class="col-md-12" rows="20" ng-model="vm.statusDescription"></textarea>
-                                
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <button type="button" class="btn btn-w-m btn-primary" ng-click="vm.updateEstatus()">Actualizar Estatus</button>
-            </div>
-        </div>
+      <div class="col-md-6">
+        <label>Selecciona Estatus a editar
+          <span class="text-danger">*</span>
+        </label>
+        <select ng-disabled="vm.disableEstatusSelect" class="form-control m-b" ng-change="vm.cambioEstatus()" ng-model="vm.estatus_seleccionado"
+          ng-options="estatus.index as estatus.title for estatus in vm.estatus" id="chapters">
+          <option value="">Seleccione</option>
+        </select>
+        <span ng-show="vm.errorNoStatus" class="text-danger">No hay estatus agegados a este capitulo </span>
+      </div>
+      <div class="col-md-8">
+        <button type="button" class="btn btn-w-m btn-primary" ng-disabled="vm.buttonEditDisable" ng-click="vm.buttonEdit()">Editar Estatus</button>
+      </div>
     </div>
+  </div>
+  <div ng-show="vm.showEditStatus" class="ibox-content">
+    <div class="row">
+      <div class="col-md-12">
+        <label>Contenido de Estatus</label>
+      </div>
+    </div>
+    <div class="row">
+      <textarea class="col-md-12" rows="20" ng-model="vm.statusDescription"></textarea>
+      <span class="error text-danger " ng-show="vm.spanContenido">Requiere un contenido </span>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <label>Agregar o editar decisiones de Estatus</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Selecciona tipo de decision
+            <span class="text-danger">*</span>
+          </label>
+          <select class="form-control m-b" id="chapters" ng-change="vm.changeTypeDecision()" ng-model="vm.decisionType" >
+            <option value="">Seleccione</option>
+            <option value="1">Simple</option>
+            <option value="2">Tres decisiones</option>
+          </select>
+          <span class="error text-danger " ng-show="vm.spanTypeDecision">Seleccione el tipo de decision</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label>Primera decision
+            <span class="text-danger">*</span>
+          </label>
+          <input ng-model="vm.textoPrimeraDecision">
+          <span class="error text-danger " ng-show="vm.spanPrimera">El campo es requerido</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label>Segunda decision
+            <span class="text-danger">*</span>
+          </label>
+          <input ng-model="vm.textoSegundaDecision">
+          <span class="error text-danger " ng-show="vm.spanSegunda">El campo es requerido</span>
+        </div>
+      </div>
+    </div>
+    <div ng-show="vm.showTrheeOption" class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label>Tercera decision
+            <span class="text-danger">*</span>
+          </label>
+          <input ng-model="vm.textoTerceraDecision">
+          <span class="error text-danger " ng-show="vm.spanTercera">El campo es requerido</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Limite de tiempo
+            <span class="text-danger">*</span>
+          </label>
+          <input type="checkbox" ng-change="vm.cambioLimiteTiempo()" ng-model="vm.limiteTiempo" ng-checked="vm.limiteTiempo">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <button type="button" class="btn btn-w-m btn-primary" ng-click="vm.updateEstatus()">Actualizar Estatus</button>
+      </div>
+    </div>
+  </div>
+
 </div>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.2/trix.css">
-
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/trix/0.9.2/trix.js"></script>

@@ -23,6 +23,30 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Selecciona capitulo anterior
+              <span class="text-danger">*</span>
+            </label>
+            <select class="form-control m-b" ng-disabled="vm.disabledSelectChapter" ng-model="vm.capitulo_seleccionado" ng-change="vm.cambioCapitulo()" ng-options="chapter.index as chapter.chapter_name for chapter in vm.capitulos"
+              id="chapters">
+              <option value="">Seleccione</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Es inicio unico 
+              <span class="text-danger">*</span>
+            </label>
+            <input  type="checkbox"ng-checked="vm.InicioUnico" ng-change="vm.cambioInicioUnico()"ng-model="vm.InicioUnico"id="checkInicioUnico">
+          </div>
+        </div>
+      </div>
+
     </form>
   </div>
 </div>

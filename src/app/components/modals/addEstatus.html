@@ -25,6 +25,7 @@
               id="chapters">
               <option value="">Seleccione</option>
             </select>
+            <span class="error text-danger " ng-show="vm.disableSpanCapitulos">No hay capitulos creados</span>
           </div>
         </div>
       </div>
@@ -43,7 +44,21 @@
           </div>
         </div>
       </div>
-
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Selecciona la decision anterior
+              <span class="text-danger">*</span>
+            </label>
+            <select ng-disabled="vm.disableDecisionSelect"class="form-control m-b" ng-change="vm.cambioDecision()" ng-model="vm.decision_seleccionada" ng-options="decision.index as decision.name for decision in vm.decisions"
+              id="chapters">
+              <option value="">Seleccione</option>
+            </select>
+            <span class="error text-danger " ng-show="vm.disableSpanDecision">No hay decisiones validas disponibles (fueron utilizadas todas o aun no son creadas decisiones)</span>
+            <span class="error text-danger " ng-show="vm.SpanDecisionNoSeleccionado">Debe selecionar una decision anterior</span>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
@@ -55,16 +70,7 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label>Es inicio unico 
-              <span class="text-danger">*</span>
-            </label>
-            <input ng-disabled="vm.disableInicioUnico"  type="checkbox"ng-checked="vm.InicioUnico" ng-change="vm.cambioInicioUnico()"ng-model="vm.InicioUnico"id="checkInicioUnico">
-          </div>
-        </div>
-      </div>
+      
 
       <div class="row">
         <div class="col-sm-6">
@@ -83,5 +89,5 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancelar</button>
-  <button class="btn btn-success" type="button" ng-click="vm.ok()" ng-disabled="!frmnew.$valid">Guardar</button>
+  <button class="btn btn-success" type="button" ng-click="vm.ok()" ng-disabled="vm.saveDisable">Guardar</button>
 </div>

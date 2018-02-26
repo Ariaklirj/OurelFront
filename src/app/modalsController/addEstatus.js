@@ -30,20 +30,22 @@
             vm.capitulo_seleccionado = null;
             vm.estatus_seleccionado = null;
             vm.disableEstatusSelect = true;
-            vm.disableEstatusFinal = false;
-            vm.disableInicioUnico = false;
-            vm.spanTitle=false;
+            vm.disableEstatusFinal = true;
+            vm.disableSpanCapitulos = false;
+            vm.decision_seleccionada = null;
+            vm.SpanDecisionNoSeleccionado=false;
+            vm.spanTitle = false;
             vm.SpanEstatusNoSeleccionado = false;
             vm.disableSpanEstatus = false;
-            vm.disablePrimerEstatus = false;
+            vm.disablePrimerEstatus = true;
             vm.primerEstatus = false;
-            vm.InicioUnico = false;
+            vm.saveDisable = false;
+            vm.decisions = [];
             vm.EstatusFinal = false;
 
             Auth.ObtenerCapitulos(criteria)
                 .then(function (respuesta) {
-
-
+                    console.log(respuesta);
                     for (var i = 0; i < respuesta.data.length; i++) {
                         respuesta.data[i].index = i;
                     }
@@ -51,6 +53,8 @@
                     console.log(vm.capitulos);
                 })
                 .catch(function (err) {
+                    vm.saveDisable = true;
+                    vm.disableSpanCapitulos = true;
                     console.log(err);
                 });
 
@@ -64,33 +68,18 @@
                 else {
                     vm.primerEstatus = true;
                     vm.disableEstatusFinal = true;
-
-                    vm.primerEstatus = true;
+                    vm.disableEstatusSelect = true;
+                    vm.estatus_seleccionado = null;
                     vm.EstatusFinal = false;
                 }
                 console.log(vm.primerEstatus)
             }
-            vm.cambioInicioUnico = function () {
 
-                if (!vm.InicioUnico) {
-                    vm.InicioUnico = false;
-                    vm.disableEstatusFinal = false;
-                    vm.primerEstatus = false;
-
-                } else {
-                    vm.InicioUnico = true;
-                    vm.disableEstatusFinal = true;
-
-                    vm.primerEstatus = true;
-                    vm.EstatusFinal = false;
-                }
-                console.log(vm.InicioUnico)
-            }
             vm.cambioEstatusFinal = function () {
                 if (!vm.EstatusFinal) {
                     vm.EstatusFinal = false;
 
-                    vm.disableInicioUnico = false;
+
                     vm.disablePrimerEstatus = false;
 
                 } else {
@@ -98,10 +87,10 @@
 
 
 
-                    vm.disableInicioUnico = true;
+
                     vm.disablePrimerEstatus = true;
                     vm.primerEstatus = false;
-                    vm.InicioUnico = false;
+
 
                 }
                 console.log(vm.EstatusFinal)
@@ -109,6 +98,76 @@
 
             vm.cambioEstatus = function () {
                 vm.SpanEstatusNoSeleccionado = false;
+                vm.disableSpanDecision = false;
+                vm.saveDisable = false;
+                var criteria = {
+                    status: vm.estatus[vm.estatus_seleccionado].id_estatus
+                }
+                Auth.ObtenerDecisiones(criteria)
+                    .then(function (response) {
+                        var i = 0;
+                        if (response.data[0].idNextStatusOne == null || response.data[0].idNextStatusTwo == null || response.data[0].idNextStatusThree == null) {
+                            if (response.data[0].idNextStatusOne == null) {
+                                var objDecision1 = {
+                                    index: i,
+                                    name: response.data[0].descriptionOne,
+                                    id_decision: {
+                                        id_decision: response.data[0].id_decision
+                                    },
+                                    updateDecision: {
+                                        idNextStatusOne: ""
+                                    },
+                                    type: 1
+                                }
+                                vm.decisions.push(objDecision1);
+                                i++;
+                            }
+                            if (response.data[0].idNextStatusTwo == null) {
+                                var objDecision2 = {
+                                    index: i,
+                                    name: response.data[0].descriptionTwo,
+                                    id_decision: {
+                                        id_decision: response.data[0].id_decision
+                                    },
+                                    updateDecision: {
+                                        idNextStatusTwo: ""
+                                    },
+                                    type: 2
+
+                                }
+                                vm.decisions.push(objDecision2);
+                                i++
+                            }
+
+                            if (!response.data[0].singleDecision && response.data[0].idNextStatusThree == null) {
+                                var objDecision3 = {
+                                    index: i,
+                                    name: response.data[0].descriptionThree,
+                                    id_decision: {
+                                        id_decision: response.data[0].id_decision
+                                    },
+                                    updateDecision: {
+                                        idNextStatusThree: ""
+                                    },
+                                    type: 3
+
+                                }
+                                vm.decisions.push(objDecision3);
+                                i++;
+                            }
+                        } else {
+                            vm.disableSpanDecision = true;
+                            vm.saveDisable = true;
+                        }
+
+
+
+                    })
+                    .catch(function (err) {
+                        vm.saveDisable = true;
+                        vm.disableSpanDecision = true;
+                    })
+
             }
 
             vm.cambioCapitulo = function () {
@@ -122,47 +181,47 @@
                     console.log(dataReqEstatus);
                     Auth.ObtenerEstatus(dataReqEstatus)
                         .then(function (resEstatus) {
-
-                            
-                            if (resEstatus.data.length > 0) {
-                                for (var i = 0; i < resEstatus.data.length; i++) {
-                                    resEstatus.data[i].index = i;
-                                }
-                                console.log(resEstatus.data);
-                                vm.estatus = resEstatus.data;
-
-                            } else {
-                                vm.disableSpanEstatus = true;
-                                vm.disableEstatusFinal = true;
-                                vm.disableInicioUnico = false;
-                                vm.disablePrimerEstatus = true;
-                                vm.primerEstatus = true;
-                                vm.InicioUnico = false;
-                                vm.EstatusFinal = false;
+                            for (var i = 0; i < resEstatus.data.length; i++) {
+                                resEstatus.data[i].index = i;
                             }
-
+                            console.log(resEstatus.data);
+                            vm.estatus = resEstatus.data;
+                            if (vm.capitulos[vm.capitulo_seleccionado].unique_start) {
+                                vm.disablePrimerEstatus = true;
+                                vm.disableEstatusFinal = false;
+                                vm.primerEstatus = false;
+                            } else {
+                                vm.disableEstatusFinal = false;
+                                vm.disablePrimerEstatus = false;
+                            }
                         })
                         .catch(function (err) {
+                            vm.disableSpanEstatus = true;
+                            vm.disableEstatusFinal = true;
+
+                            vm.disablePrimerEstatus = true;
+
+                            vm.primerEstatus = true;
+                            vm.EstatusFinal = false;
+
                             console.log(err);
                         });
                 }
             }
             vm.ok = function () {
 
-                if (!vm.primerEstatus) {
-                    if (vm.estatus_seleccionado != null) {
-                        if(vm.title!="") {
-                             var newEstatus = {
+                if (vm.primerEstatus) {
+
+                    if (vm.title != "") {
+                        var newEstatus = {
                             title: vm.name,
-                            uniqueStart: vm.InicioUnico,
                             isStart: vm.primerEstatus,
                             isEnd: vm.EstatusFinal,
-                            lastStatus: vm.estatus[vm.estatus_seleccionado].id_estatus,
                             admin: $localStorage.idAdmin,
                             chapter: vm.capitulos[vm.capitulo_seleccionado].id_chapter
                         };
                         console.log(newEstatus);
-                         Auth.CrearEstatus(newEstatus)
+                        Auth.CrearEstatus(newEstatus)
                             .then(function (data) {
                                 console.log(data);
                                 $rootScope.$emit('statusAdded');
@@ -171,41 +230,72 @@
                             .catch(function (err) {
                                 console.log(err);
                             })
-    
-                        } else {
-                            vm.spanTitle=true;
-                        }
-                       
+
                     } else {
-                        vm.SpanEstatusNoSeleccionado = true;
+                        vm.spanTitle = true;
                     }
-
-
                 } else {
-                    if(vm.title!=""){
-                       var newEstatus = {
-                        title: vm.name,
-                        uniqueStart: vm.InicioUnico,
-                        isStart: vm.primerEstatus,
-                        isEnd: vm.EstatusFinal,
-                        lastStatus: null,
-                        admin: $localStorage.idAdmin,
-                        chapter: vm.capitulos[vm.capitulo_seleccionado].id_chapter
-                    };
-                    console.log(newEstatus);
-                      Auth.CrearEstatus(newEstatus)
-                         .then(function (data) {
-                             console.log(data);
-                             $rootScope.$emit('statusAdded');
-                             $uibModalInstance.dismiss('close');
-                         })
-                         .catch(function (err) {
-                             console.log(err);
-                         })  
+                    if (vm.title != "") {
+                        var newEstatus = {}
+                        if (vm.estatus_seleccionado != null) {
+                            newEstatus = {
+                                title: vm.name,
+
+                                isStart: vm.primerEstatus,
+                                isEnd: vm.EstatusFinal,
+                                lastStatus: vm.estatus[vm.estatus_seleccionado].id_estatus,
+                                admin: $localStorage.idAdmin,
+                                chapter: vm.capitulos[vm.capitulo_seleccionado].id_chapter
+
+                            };
+                            console.log(newEstatus);
+                            if (vm.decision_seleccionada != null) {
+                                Auth.CrearEstatus(newEstatus)
+                                    .then(function (response) {
+
+                                        switch (vm.decisions[vm.decision_seleccionada].type) {
+                                            case 1:
+                                                vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOne = response.data.id_estatus;
+                                                break;
+
+                                            case 2:
+                                                vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwo = response.data.id_estatus;
+                                                break;
+
+                                            case 3:
+                                                vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThree = response.data.id_estatus;
+                                                break;
+                                        }
+
+
+                                        var updateDecisionReq = {
+                                            id_decision: vm.decisions[vm.decision_seleccionada].id_decision,
+                                            updateDecision: vm.decisions[vm.decision_seleccionada].updateDecision
+                                        }
+                                        Auth.ActualizarDecisiones(updateDecisionReq)
+                                            .then(function (responseUpdate) {
+                                                console.log(responseUpdate);
+                                                $rootScope.$emit('statusAdded');
+                                                $uibModalInstance.dismiss('close');
+                                            })
+                                            .catch(function (err) {
+
+                                            })
+                                    })
+                                    .catch(function (err) {
+                                        console.log(err);
+                                    })
+                            } else {
+                                vm.SpanDecisionNoSeleccionado=true;
+                            }
+
+                        } else {
+                            vm.SpanEstatusNoSeleccionado = true;
+                        }
                     } else {
-                        vm.spanTitle=false;
+                        vm.spanTitle = false;
                     }
-                    
+
                 }
             }
             vm.cancel = function () {
