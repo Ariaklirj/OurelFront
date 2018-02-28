@@ -29,14 +29,18 @@
           </div>
         </div>
       </div>
+
+  
+
+
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
             <label>Selecciona estatus anterior
               <span class="text-danger">*</span>
             </label>
-            <select ng-disabled="vm.disableEstatusSelect"class="form-control m-b" ng-change="vm.cambioEstatus()" ng-model="vm.estatus_seleccionado" ng-options="estatus.index as estatus.title for estatus in vm.estatus"
-              id="chapters">
+            <select ng-disabled="vm.disableEstatusSelect" class="form-control m-b" ng-change="vm.cambioEstatus()" ng-model="vm.estatus_seleccionado"
+              ng-options="estatus.index as estatus.title for estatus in vm.estatus" id="chapters">
               <option value="">Seleccione</option>
             </select>
             <span class="error text-danger " ng-show="vm.disableSpanEstatus">No hay estatus anteriores </span>
@@ -50,8 +54,8 @@
             <label>Selecciona la decision anterior
               <span class="text-danger">*</span>
             </label>
-            <select ng-disabled="vm.disableDecisionSelect"class="form-control m-b" ng-change="vm.cambioDecision()" ng-model="vm.decision_seleccionada" ng-options="decision.index as decision.name for decision in vm.decisions"
-              id="chapters">
+            <select ng-disabled="vm.disableDecisionSelect" class="form-control m-b" ng-change="vm.cambioDecision()" ng-model="vm.decision_seleccionada"
+              ng-options="decision.index as decision.name for decision in vm.decisions" id="chapters">
               <option value="">Seleccione</option>
             </select>
             <span class="error text-danger " ng-show="vm.disableSpanDecision">No hay decisiones validas disponibles (fueron utilizadas todas o aun no son creadas decisiones)</span>
@@ -59,31 +63,78 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label>Es el primer estatus 
-              <span class="text-danger">*</span>
-            </label>
-            <input ng-disabled="vm.disablePrimerEstatus" type="checkbox"ng-checked="vm.primerEstatus" ng-change="vm.cambioPrimerEstaus()" ng-model="vm.primerEstatus"id="checkPrimerEstatus">
-          </div>
-        </div>
-      </div>
-
-      
 
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label>Es estatus final 
+            <label>Mas de una decision anterior conlleva a este estatus
               <span class="text-danger">*</span>
             </label>
-            <input  ng-disabled="vm.disableEstatusFinal" type="checkbox"ng-checked="vm.EstatusFinal"  ng-change="vm.cambioEstatusFinal()"ng-model="vm.EstatusFinal"id="checkEstatusFinal">
+            <input ng-disabled="vm.disableMasDeUnaDecision" type="checkbox" ng-checked="vm.dobleDecisionAnterior" ng-change="vm.cambioDobleDecisionAnterior()"
+              ng-model="vm.dobleDecisionAnterior" id="checkDobleDecisionAnterior">
           </div>
         </div>
       </div>
 
-     
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Selecciona estatus anterior 2
+              <span class="text-danger">*</span>
+            </label>
+            <select ng-disabled="vm.disableEstatusSelect2" class="form-control m-b" ng-change="vm.cambioEstatus2()" ng-model="vm.estatus_seleccionado2"
+              ng-options="estatus.index as estatus.title for estatus in vm.estatus" id="chapters">
+              <option value="">Seleccione</option>
+            </select>
+            <span class="error text-danger " ng-show="vm.disableSpanEstatus2">No hay estatus anteriores </span>
+            <span class="error text-danger " ng-show="vm.SpanEstatusNoSeleccionado2">Seleccione el estatus anterior2</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Selecciona la decision anterior 2
+              <span class="text-danger">*</span>
+            </label>
+            <select ng-disabled="vm.disableDecisionSelect2" class="form-control m-b" ng-change="vm.cambioDecision2()" ng-model="vm.decision_seleccionada2"
+              ng-options="decision.index as decision.name for decision in vm.decisions2" id="chapters">
+              <option value="">Seleccione</option>
+            </select>
+            <span class="error text-danger " ng-show="vm.disableSpanDecision2">No hay decisiones validas disponibles (fueron utilizadas todas o aun no son creadas decisiones)</span>
+            <span class="error text-danger " ng-show="vm.SpanDecisionNoSeleccionado2">Debe selecionar una decision anterior</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Es el primer estatus
+              <span class="text-danger">*</span>
+            </label>
+            <input ng-disabled="vm.disablePrimerEstatus" type="checkbox" ng-checked="vm.primerEstatus" ng-change="vm.cambioPrimerEstaus()"
+              ng-model="vm.primerEstatus" id="checkPrimerEstatus">
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Es estatus final
+              <span class="text-danger">*</span>
+            </label>
+            <input ng-disabled="vm.disableEstatusFinal" type="checkbox" ng-checked="vm.EstatusFinal" ng-change="vm.cambioEstatusFinal()"
+              ng-model="vm.EstatusFinal" id="checkEstatusFinal">
+          </div>
+        </div>
+      </div>
+
+      <span class="error text-danger " ng-show="vm.showSpanDecisionDoble">No puede seleccionarse dos veces el mismo estatus</span>
     </form>
   </div>
 </div>
