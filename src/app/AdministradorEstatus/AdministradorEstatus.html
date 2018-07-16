@@ -70,8 +70,10 @@
           <label>Selecciona tipo de decision
             <span class="text-danger">*</span>
           </label>
-          <select class="form-control m-b" id="chapters" ng-change="vm.changeTypeDecision()" ng-model="vm.decisionType" >
+          <!-- Seccion decisiones -->
+          <select class="form-control m-b" id="chapters" ng-change="vm.changeTypeDecision()" ng-model="vm.decisionType">
             <option value="">Seleccione</option>
+            <option value="3">Unica</option>
             <option value="1">Simple</option>
             <option value="2">Tres decisiones</option>
           </select>
@@ -87,10 +89,44 @@
           </label>
           <input ng-model="vm.textoPrimeraDecision">
           <span class="error text-danger " ng-show="vm.spanPrimera">El campo es requerido</span>
+
+          <label>Tiene requerimientos
+            <span class="text-danger">*</span>
+          </label>
+          <input type="checkbox" ng-change="vm.hasRequires1Changed()" ng-model="vm.hasRestriccionsOne" >
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" ng-show="vm.hasRestriccionsOne">
+      <div class="col-sm-12">
+        <div class="form-group">
+
+
+          <label>Vitalidad (vit) requerido default(0)
+            <span class="text-danger">*</span>
+          </label>
+          <input type="number" ng-model="vm.vitOneNeeded">
+          <label>Fuerza (str) requerido default(0)
+            <span class="text-danger">*</span>
+          </label>
+          <input type="number" ng-model="vm.strOneNeeded">
+          <label>Agilidad (agi) requerido default(0)
+            <span class="text-danger">*</span>
+          </label>
+          <input type="number" ng-model="vm.agiOneNeeded">
+          <label>Inteligencia (int) requerido default(0)
+            <span class="text-danger">*</span>
+          </label>
+          <input type="number" ng-model="vm.intOneNeeded">
+          <label>Suerte (lck) requerido default(0)
+            <span class="text-danger">*</span>
+          </label>
+          <input type="number" ng-model="vm.lckOneNeeded">
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="vm.showSecondOption" class="row">
       <div class="col-sm-12">
         <div class="form-group">
           <label>Segunda decision
@@ -98,9 +134,43 @@
           </label>
           <input ng-model="vm.textoSegundaDecision">
           <span class="error text-danger " ng-show="vm.spanSegunda">El campo es requerido</span>
+          <label>Tiene requerimientos
+              <span class="text-danger">*</span>
+            </label>
+            <input type="checkbox" ng-change="vm.hasRequires2Changed()" ng-model="vm.hasRestriccionsTwo" >
         </div>
       </div>
     </div>
+
+    <div class="row" ng-show="vm.hasRestriccionsTwo">
+        <div class="col-sm-12">
+          <div class="form-group">
+  
+  
+            <label>Vitalidad (vit) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.vitTwoNeeded">
+            <label>Fuerza (str) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.strTwoNeeded">
+            <label>Agilidad (agi) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.agiTwoNeeded">
+            <label>Inteligencia (int) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.intTwoNeeded">
+            <label>Suerte (lck) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.lckTwoNeeded">
+          </div>
+        </div>
+      </div>
+
     <div ng-show="vm.showTrheeOption" class="row">
       <div class="col-sm-12">
         <div class="form-group">
@@ -109,9 +179,44 @@
           </label>
           <input ng-model="vm.textoTerceraDecision">
           <span class="error text-danger " ng-show="vm.spanTercera">El campo es requerido</span>
+          <label>Tiene requerimientos
+              <span class="text-danger">*</span>
+            </label>
+            <input type="checkbox" ng-change="vm.hasRequires2Changed()" ng-model="vm.hasRestriccionsThree" >
         </div>
       </div>
     </div>
+
+    <div class="row" ng-show="vm.hasRestriccionsThree">
+        <div class="col-sm-12">
+          <div class="form-group">
+  
+  
+            <label>Vitalidad (vit) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.vitThreeNeeded">
+            <label>Fuerza (str) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.strThreeNeeded">
+            <label>Agilidad (agi) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.agiThreeNeeded">
+            <label>Inteligencia (int) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.intThreeNeeded">
+            <label>Suerte (lck) requerido default(0)
+              <span class="text-danger">*</span>
+            </label>
+            <input type="number" ng-model="vm.lckThreeNeeded">
+          </div>
+        </div>
+      </div>
+
+
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group">

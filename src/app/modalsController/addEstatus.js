@@ -27,14 +27,19 @@
             vm.capitulos;
             vm.estatus;
             vm.name
-            vm.disableEstatusSelect2=true;
-            vm.disableDecisionSelect2=true;
-            vm.showSpanDecisionDoble=false;
+            vm.disableEstatusSelect2 = true;
+            vm.disableDecisionSelect2 = true;
+            vm.showSpanDecisionDoble = false;
+            vm.SuccesFailDecision = false;
             vm.capitulo_seleccionado = null;
             vm.estatus_seleccionado = null;
             vm.disableEstatusSelect = true;
             vm.disableEstatusFinal = true;
             vm.disableSpanCapitulos = false;
+            vm.disableSuccesFailDecision = false
+            vm.disableSuccesFailDecision2 = false
+            vm.showSuccesFailOption = false;
+            vm.showSuccesFailOption2 = false;
             vm.decision_seleccionada = null;
             vm.SpanDecisionNoSeleccionado = false;
             vm.spanTitle = false;
@@ -48,7 +53,11 @@
             vm.EstatusFinal = false;
             vm.disableMasDeUnaDecision = false;
             vm.dobleDecisionAnterior = false;
-
+            vm.vitUp = 0;
+            vm.agiUp = 0;
+            vm.strUp = 0;
+            vm.lckUp = 0;
+            vm.intUp = 0;
             Auth.ObtenerCapitulos(criteria)
                 .then(function (respuesta) {
                     console.log(respuesta);
@@ -83,13 +92,13 @@
 
             vm.cambioDobleDecisionAnterior = function () {
                 if (!vm.dobleDecisionAnterior) {
-                    vm.disableEstatusSelect2=true;
-                    vm.disableDecisionSelect2=true;
+                    vm.disableEstatusSelect2 = true;
+                    vm.disableDecisionSelect2 = true;
                     vm.dobleDecisionAnterior = false;
                 }
                 else {
-                    vm.disableEstatusSelect2=false;
-                    vm.disableDecisionSelect2=false;
+                    vm.disableEstatusSelect2 = false;
+                    vm.disableDecisionSelect2 = false;
                     vm.dobleDecisionAnterior = true;
                 }
                 console.log(vm.dobleDecisionAnterior)
@@ -126,55 +135,138 @@
                 Auth.ObtenerDecisiones(criteria)
                     .then(function (response) {
                         var i = 0;
-                        if (response.data[0].idNextStatusOne == null || response.data[0].idNextStatusTwo == null || response.data[0].idNextStatusThree == null) {
-                            if (response.data[0].idNextStatusOne == null) {
-                                var objDecision1 = {
-                                    index: i,
-                                    name: response.data[0].descriptionOne,
-                                    id_decision: {
-                                        id_decision: response.data[0].id_decision
-                                    },
-                                    updateDecision: {
-                                        idNextStatusOne: ""
-                                    },
-                                    type: 1
+                        if (response.data.idNextStatusOne == null || response.data.idNextStatusTwo == null || response.data.idNextStatusThree == null) {
+                            if (response.data.idNextStatusOne == null) {
+                                console.log(response.data.hasRestriccionsOne);
+                                if (response.data.hasRestriccionsOne) {
+                                    if (response.data.idNextStatusOneSucces == null || response.data.idNextStatusOneFail == null) {
+                                        var objDecision1 = {
+                                            index: i,
+                                            name: response.data.descriptionOne,
+                                            id_decision: {
+                                                id_decision: response.data.id_decision
+                                            },
+                                            hasRestriccions: true,
+                                            updateDecision: {
+                                                idNextStatusOne: null,
+                                                idNextStatusOneSucces: response.data.idNextStatusOneSucces,
+                                                idNextStatusOneFail: response.data.idNextStatusOneFail
+                                            },
+                                            type: 1
+                                        }
+                                        vm.decisions.push(objDecision1);
+                                        i++;
+                                    }
+                                } else {
+                                    var objDecision1 = {
+                                        index: i,
+                                        hasRestriccions: false,
+                                        name: response.data.descriptionOne,
+                                        id_decision: {
+                                            id_decision: response.data.id_decision
+                                        },
+                                        updateDecision: {
+                                            idNextStatusOne: ""
+                                        },
+                                        type: 1
+                                    }
+                                    vm.decisions.push(objDecision1);
+                                    i++;
                                 }
-                                vm.decisions.push(objDecision1);
-                                i++;
                             }
-                            if (response.data[0].idNextStatusTwo == null) {
-                                var objDecision2 = {
-                                    index: i,
-                                    name: response.data[0].descriptionTwo,
-                                    id_decision: {
-                                        id_decision: response.data[0].id_decision
-                                    },
-                                    updateDecision: {
-                                        idNextStatusTwo: ""
-                                    },
-                                    type: 2
+                            if (response.data.idNextStatusTwo == null) {
 
+                                console.log(response.data.hasRestriccionsTwo);
+                                if (response.data.hasRestriccionsTwo) {
+                                    if (response.data.idNextStatusTwoSucces == null || response.data.idNextStatusTwoFail == null) {
+                                        var objDecision2 = {
+                                            index: i,
+                                            name: response.data.descriptionTwo,
+                                            id_decision: {
+                                                id_decision: response.data.id_decision
+                                            },
+                                            hasRestriccions: true,
+                                            updateDecision: {
+                                                idNextStatusTwo: null,
+                                                idNextStatusTwoFail: response.data.idNextStatusTwoFail,
+                                                idNextStatusTwoSucces: response.data.idNextStatusTwoSucces
+                                            },
+                                            type: 2
+                                        }
+                                        vm.decisions.push(objDecision2);
+                                        i++;
+                                    }
                                 }
-                                vm.decisions.push(objDecision2);
-                                i++
-                            }
 
-                            if (!response.data[0].singleDecision && response.data[0].idNextStatusThree == null) {
-                                var objDecision3 = {
-                                    index: i,
-                                    name: response.data[0].descriptionThree,
-                                    id_decision: {
-                                        id_decision: response.data[0].id_decision
-                                    },
-                                    updateDecision: {
-                                        idNextStatusThree: ""
-                                    },
-                                    type: 3
+                                else {
+                                    var objDecision2 = {
+                                        index: i,
+                                        hasRestriccions: false,
+                                        name: response.data.descriptionTwo,
+                                        id_decision: {
+                                            id_decision: response.data.id_decision
+                                        },
+                                        updateDecision: {
+                                            idNextStatusTwo: ""
+                                        },
+                                        type: 2
 
+                                    }
+                                    vm.decisions.push(objDecision2);
+                                    i++
                                 }
-                                vm.decisions.push(objDecision3);
-                                i++;
+
+
                             }
+
+                            if (!response.data.singleDecision && response.data.idNextStatusThree == null) {
+
+
+                                console.log(response.data.hasRestriccionsThree);
+                                if (response.data.hasRestriccionsThree) {
+                                    if (response.data.idNextStatusThreeSucces == null || response.data.idNextStatusThreeFail == null) {
+                                        var objDecision3 = {
+                                            index: i,
+                                            name: response.data.descriptionThree,
+                                            id_decision: {
+                                                id_decision: response.data.id_decision
+                                            },
+                                            hasRestriccions: true,
+                                            updateDecision: {
+                                                idNextStatusThree: null,
+                                                idNextStatusThreeSucces: response.data.idNextStatusThreeSucces,
+                                                idNextStatusThreeFail: response.data.idNextStatusThreeFail
+                                            },
+                                            type: 2
+                                        }
+                                        vm.decisions.push(objDecision3);
+                                        i++;
+                                    }
+                                }
+
+                                else {
+                                    var objDecision3 = {
+                                        index: i,
+                                        hasRestriccions: false,
+                                        name: response.data.descriptionThree,
+                                        id_decision: {
+                                            id_decision: response.data.id_decision
+                                        },
+                                        updateDecision: {
+                                            idNextStatusThree: ""
+                                        },
+                                        type: 3
+
+                                    }
+                                    vm.decisions.push(objDecision3);
+                                    i++;
+                                }
+
+
+
+                            }
+
+
                         } else {
                             vm.disableSpanDecision = true;
                             vm.saveDisable = true;
@@ -202,55 +294,137 @@
                 Auth.ObtenerDecisiones(criteria)
                     .then(function (response) {
                         var i = 0;
-                        if (response.data[0].idNextStatusOne == null || response.data[0].idNextStatusTwo == null || response.data[0].idNextStatusThree == null) {
-                            if (response.data[0].idNextStatusOne == null) {
-                                var objDecision1 = {
-                                    index: i,
-                                    name: response.data[0].descriptionOne,
-                                    id_decision: {
-                                        id_decision: response.data[0].id_decision
-                                    },
-                                    updateDecision: {
-                                        idNextStatusOne: ""
-                                    },
-                                    type: 1
+                        if (response.data.idNextStatusOne == null || response.data.idNextStatusTwo == null || response.data.idNextStatusThree == null) {
+                            if (response.data.idNextStatusOne == null) {
+                                if (response.data.hasRestriccionsOne) {
+                                    if (response.data.idNextStatusOneSucces == null || response.data.idNextStatusOneFail == null) {
+                                        var objDecision1 = {
+                                            index: i,
+                                            name: response.data.descriptionOne,
+                                            id_decision: {
+                                                id_decision: response.data.id_decision
+                                            },
+                                            hasRestriccions: true,
+                                            updateDecision: {
+                                                idNextStatusOne: null,
+                                                idNextStatusOneSucces: response.data.idNextStatusOneSucces,
+                                                idNextStatusOneFail: response.data.idNextStatusOneFail
+                                            },
+                                            type: 1
+                                        }
+                                        vm.decisions2.push(objDecision1);
+                                        i++;
+                                    }
+                                } else {
+                                    var objDecision1 = {
+                                        index: i,
+                                        hasRestriccions: false,
+                                        name: response.data.descriptionOne,
+                                        id_decision: {
+                                            id_decision: response.data.id_decision
+                                        },
+                                        updateDecision: {
+                                            idNextStatusOne: ""
+                                        },
+                                        type: 1
+                                    }
+                                    vm.decisions2.push(objDecision1);
+                                    i++;
                                 }
-                                vm.decisions2.push(objDecision1);
-                                i++;
                             }
-                            if (response.data[0].idNextStatusTwo == null) {
-                                var objDecision2 = {
-                                    index: i,
-                                    name: response.data[0].descriptionTwo,
-                                    id_decision: {
-                                        id_decision: response.data[0].id_decision
-                                    },
-                                    updateDecision: {
-                                        idNextStatusTwo: ""
-                                    },
-                                    type: 2
+                            if (response.data.idNextStatusTwo == null) {
 
+
+                                if (response.data.hasRestriccionsTwo) {
+                                    if (response.data.idNextStatusTwoSucces == null || response.data.idNextStatusTwoFail == null) {
+                                        var objDecision2 = {
+                                            index: i,
+                                            name: response.data.descriptionTwo,
+                                            id_decision: {
+                                                id_decision: response.data.id_decision
+                                            },
+                                            hasRestriccions: true,
+                                            updateDecision: {
+                                                idNextStatusTwo: null,
+                                                idNextStatusTwoFail: response.data.idNextStatusTwoFail,
+                                                idNextStatusTwoSucces: response.data.idNextStatusTwoSucces
+                                            },
+                                            type: 2
+                                        }
+                                        vm.decisions2.push(objDecision2);
+                                        i++;
+                                    }
                                 }
-                                vm.decisions2.push(objDecision2);
-                                i++
-                            }
 
-                            if (!response.data[0].singleDecision && response.data[0].idNextStatusThree == null) {
-                                var objDecision3 = {
-                                    index: i,
-                                    name: response.data[0].descriptionThree,
-                                    id_decision: {
-                                        id_decision: response.data[0].id_decision
-                                    },
-                                    updateDecision: {
-                                        idNextStatusThree: ""
-                                    },
-                                    type: 3
+                                else {
+                                    var objDecision2 = {
+                                        index: i,
+                                        hasRestriccions: false,
+                                        name: response.data.descriptionTwo,
+                                        id_decision: {
+                                            id_decision: response.data.id_decision
+                                        },
+                                        updateDecision: {
+                                            idNextStatusTwo: ""
+                                        },
+                                        type: 2
 
+                                    }
+                                    vm.decisions2.push(objDecision2);
+                                    i++
                                 }
-                                vm.decisions2.push(objDecision3);
-                                i++;
+
+
                             }
+
+                            if (!response.data.singleDecision && response.data.idNextStatusThree == null) {
+
+
+
+                                if (response.data.hasRestriccionsThree) {
+                                    if (response.data.idNextStatusThreeSucces == null || response.data.idNextStatusThreeFail == null) {
+                                        var objDecision3 = {
+                                            index: i,
+                                            name: response.data.descriptionThree,
+                                            id_decision: {
+                                                id_decision: response.data.id_decision
+                                            },
+                                            hasRestriccions: true,
+                                            updateDecision: {
+                                                idNextStatusThree: null,
+                                                idNextStatusThreeSucces: response.data.idNextStatusThreeSucces,
+                                                idNextStatusThreeFail: response.data.idNextStatusThreeFail
+                                            },
+                                            type: 2
+                                        }
+                                        vm.decisions2.push(objDecision3);
+                                        i++;
+                                    }
+                                }
+
+                                else {
+                                    var objDecision3 = {
+                                        index: i,
+                                        hasRestriccions: false,
+                                        name: response.data.descriptionThree,
+                                        id_decision: {
+                                            id_decision: response.data.id_decision
+                                        },
+                                        updateDecision: {
+                                            idNextStatusThree: ""
+                                        },
+                                        type: 3
+
+                                    }
+                                    vm.decisions2.push(objDecision3);
+                                    i++;
+                                }
+
+
+
+                            }
+
+
                         } else {
                             vm.disableSpanDecision2 = true;
                             vm.saveDisable = true;
@@ -261,14 +435,91 @@
                     })
                     .catch(function (err) {
                         vm.saveDisable = true;
-                        vm.disableSpanDecision2 = true;
+                        vm.disableSpanDecision = true;
                     })
 
             }
 
 
+            vm.cambioDecision = function () {
+                vm.showSuccesFailOption = false;
+                vm.disableSuccesFailDecision = false;
+                if (vm.decisions[vm.decision_seleccionada].hasRestriccions) {
+                    vm.showSuccesFailOption = true;
+                    console.log(vm.decisions[vm.decision_seleccionada]);
+                    switch (vm.decisions[vm.decision_seleccionada].type) {
+                        case 1:
+                            if (vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOneSucces != null || vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOneFail != null) {
+                                vm.disableSuccesFailDecision = true;
+                                if (vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOneSucces == null)
+                                    vm.SuccesFailDecision = true;
+                                else
+                                    vm.SuccesFailDecision = false;
+                            }
+                            break;
+                        case 2:
+                            if (vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwoSucces != null || vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwoFail != null) {
+                                vm.disableSuccesFailDecision = true;
+                                if (vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwoSucces == null)
+                                    vm.SuccesFailDecision = true;
+                                else
+                                    vm.SuccesFailDecision = false;
+                            }
+                            break;
+
+                        case 3:
+                            if (vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThreeSucces != null || vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThreeFail != null) {
+                                vm.disableSuccesFailDecision = true;
+                                if (vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThreeSucces == null)
+                                    vm.SuccesFailDecision = true;
+                                else
+                                    vm.SuccesFailDecision = false;
+                            }
+                            break;
+                    }
+                }
 
 
+
+            }
+            vm.cambioDecision2 = function () {
+                vm.showSuccesFailOption2 = false;
+                vm.disableSuccesFailDecision2 = false;
+                if (vm.decisions2[vm.decision_seleccionada2].hasRestriccions) {
+                    vm.showSuccesFailOption2 = true;
+                    switch (vm.decisions2[vm.decision_seleccionada2].type) {
+                        case 1:
+                            if (vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusOneSucces != null || vm.decisions2[vm.decision_seleccionada].updateDecision.idNextStatusOneFail != null) {
+                                vm.disableSuccesFailDecision = true;
+                                if (vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusOneSucces == null)
+                                    vm.SuccesFailDecision2 = true;
+                                else
+                                    vm.SuccesFailDecision2 = false;
+                            }
+                            break;
+                        case 2:
+                            if (vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusTwoSucces != null || vm.decisions2[vm.decision_seleccionada].updateDecision.idNextStatusTwoFail != null) {
+                                vm.disableSuccesFailDecision = true;
+                                if (vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusTwoSucces == null)
+                                    vm.SuccesFailDecision2 = true;
+                                else
+                                    vm.SuccesFailDecision2 = false;
+                            }
+                            break;
+
+                        case 3:
+                            if (vm.decisions2[vm.decision_seleccionada].updateDecision.idNextStatusThreeSucces != null || vm.decisions2[vm.decision_seleccionada].updateDecision.idNextStatusThreeFail != null) {
+                                vm.disableSuccesFailDecision = true;
+                                if (vm.decisions2[vm.decision_seleccionada].updateDecision.idNextStatusThreeSucces == null)
+                                    vm.SuccesFailDecision2 = true;
+                                else
+                                    vm.SuccesFailDecision2 = false;
+                            }
+                            break;
+                    }
+                }
+
+            }
             vm.cambioCapitulo = function () {
                 if (vm.capitulo_seleccionado != null) {
                     vm.disableSpanEstatus = false;
@@ -307,8 +558,15 @@
                         });
                 }
             }
+
+
             vm.ok = function () {
-                vm.showSpanDecisionDoble=false;
+                vm.vitUp = parseInt(vm.vitUp);
+                vm.agiUp = parseInt(vm.agiUp);
+                vm.strUp = parseInt(vm.strUp);
+                vm.lckUp = parseInt(vm.lckUp);
+                vm.intUp = parseInt(vm.intUp);
+                vm.showSpanDecisionDoble = false;
                 if (vm.primerEstatus) {
 
                     if (vm.title != "") {
@@ -317,7 +575,12 @@
                             isStart: vm.primerEstatus,
                             isEnd: vm.EstatusFinal,
                             admin: $localStorage.idAdmin,
-                            chapter: vm.capitulos[vm.capitulo_seleccionado].id_chapter
+                            chapter: vm.capitulos[vm.capitulo_seleccionado].id_chapter,
+                            vitUp: vm.vitUp,
+                            agiUp: vm.agiUp,
+                            strUp: vm.strUp,
+                            lckUp: vm.lckUp,
+                            intUp: vm.intUp
                         };
                         console.log(newEstatus);
                         Auth.CrearEstatus(newEstatus)
@@ -340,8 +603,8 @@
                             var newEstatus = {}
                             if (vm.estatus_seleccionado != null) {
                                 if (vm.estatus_seleccionado2 != null) {
-                                    if (vm.estatus[vm.estatus_seleccionado].id_estatus ==vm.estatus[vm.estatus_seleccionado2].id_estatus) {
-                                        vm.showSpanDecisionDoble=true;
+                                    if (vm.estatus[vm.estatus_seleccionado].id_estatus == vm.estatus[vm.estatus_seleccionado2].id_estatus) {
+                                        vm.showSpanDecisionDoble = true;
                                     } else {
                                         newEstatus = {
                                             title: vm.name,
@@ -351,7 +614,12 @@
                                             lastStatus: vm.estatus[vm.estatus_seleccionado].id_estatus,
                                             lastStatus2: vm.estatus[vm.estatus_seleccionado2].id_estatus,
                                             admin: $localStorage.idAdmin,
-                                            chapter: vm.capitulos[vm.capitulo_seleccionado].id_chapter
+                                            chapter: vm.capitulos[vm.capitulo_seleccionado].id_chapter,
+                                            vitUp: vm.vitUp,
+                                            agiUp: vm.agiUp,
+                                            strUp: vm.strUp,
+                                            lckUp: vm.lckUp,
+                                            intUp: vm.intUp
 
                                         };
                                         console.log(newEstatus);
@@ -362,28 +630,88 @@
 
                                                         switch (vm.decisions[vm.decision_seleccionada].type) {
                                                             case 1:
-                                                                vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOne = response.data.id_estatus;
+                                                                if (vm.decisions[vm.decision_seleccionada].hasRestriccions) {
+                                                                    if (vm.SuccesFailDecision) {
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOne = null;
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOneSucces = response.data.id_estatus
+                                                                    } else {
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOne = null;
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOneFail = response.data.id_estatus
+                                                                    }
+                                                                }
+                                                                else
+                                                                    vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOne = response.data.id_estatus;
                                                                 break;
 
                                                             case 2:
-                                                                vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwo = response.data.id_estatus;
+                                                                if (vm.decisions[vm.decision_seleccionada].hasRestriccions) {
+                                                                    if (vm.SuccesFailDecision) {
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwo = null;
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwoSucces = response.data.id_estatus
+                                                                    } else {
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwo = null;
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwoFail = response.data.id_estatus
+                                                                    }
+                                                                }
+                                                                else
+                                                                    vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwo = response.data.id_estatus;
                                                                 break;
 
                                                             case 3:
-                                                                vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThree = response.data.id_estatus;
+                                                                if (vm.decisions[vm.decision_seleccionada].hasRestriccions) {
+                                                                    if (vm.SuccesFailDecision) {
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThree = null;
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThreeSucces = response.data.id_estatus
+                                                                    } else {
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThree = null;
+                                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThreeFail = response.data.id_estatus
+                                                                    }
+                                                                }
+                                                                else
+                                                                    vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThree = response.data.id_estatus;
                                                                 break;
                                                         }
                                                         switch (vm.decisions2[vm.decision_seleccionada2].type) {
                                                             case 1:
-                                                                vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusOne = response.data.id_estatus;
+                                                                if (vm.decisions2[vm.decision_seleccionada2].hasRestriccions) {
+                                                                    if (vm.SuccesFailDecision) {
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusOne = null;
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusOneSucces = response.data.id_estatus
+                                                                    } else {
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusOne = null;
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusOneFail = response.data.id_estatus
+                                                                    }
+                                                                }
+                                                                else
+                                                                    vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusOne = response.data.id_estatus;
                                                                 break;
 
                                                             case 2:
-                                                                vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusTwo = response.data.id_estatus;
+                                                                if (vm.decisions2[vm.decision_seleccionada2].hasRestriccions) {
+                                                                    if (vm.SuccesFailDecision) {
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusTwo = null;
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusTwoSucces = response.data.id_estatus
+                                                                    } else {
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusTwo = null;
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusTwoFail = response.data.id_estatus
+                                                                    }
+                                                                }
+                                                                else
+                                                                    vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusTwo = response.data.id_estatus;
                                                                 break;
 
                                                             case 3:
-                                                                vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusThree = response.data.id_estatus;
+                                                                if (vm.decisions2[vm.decision_seleccionada2].hasRestriccions) {
+                                                                    if (vm.SuccesFailDecision) {
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusThree = null;
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusThreeSucces = response.data.id_estatus
+                                                                    } else {
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusThree = null;
+                                                                        vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusThreeFail = response.data.id_estatus
+                                                                    }
+                                                                }
+                                                                else
+                                                                    vm.decisions2[vm.decision_seleccionada2].updateDecision.idNextStatusThree = response.data.id_estatus;
                                                                 break;
                                                         }
                                                         var updateDecisionReq2 = {
@@ -442,8 +770,12 @@
                                     isEnd: vm.EstatusFinal,
                                     lastStatus: vm.estatus[vm.estatus_seleccionado].id_estatus,
                                     admin: $localStorage.idAdmin,
-                                    chapter: vm.capitulos[vm.capitulo_seleccionado].id_chapter
-
+                                    chapter: vm.capitulos[vm.capitulo_seleccionado].id_chapter,
+                                    vitUp: vm.vitUp,
+                                    agiUp: vm.agiUp,
+                                    strUp: vm.strUp,
+                                    lckUp: vm.lckUp,
+                                    intUp: vm.intUp
                                 };
                                 console.log(newEstatus);
                                 if (vm.decision_seleccionada != null) {
@@ -452,15 +784,48 @@
 
                                             switch (vm.decisions[vm.decision_seleccionada].type) {
                                                 case 1:
-                                                    vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOne = response.data.id_estatus;
+                                                    console.log(vm.decisions[vm.decision_seleccionada].hasRestriccions);
+                                                    if (vm.decisions[vm.decision_seleccionada].hasRestriccions) {
+                                                        if (vm.SuccesFailDecision) {
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOne = null;
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOneSucces = response.data.id_estatus
+                                                        } else {
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOne = null;
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOneFail = response.data.id_estatus
+                                                        }
+                                                    }
+                                                    else
+                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusOne = response.data.id_estatus;
                                                     break;
 
                                                 case 2:
-                                                    vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwo = response.data.id_estatus;
+                                                    console.log(vm.decisions[vm.decision_seleccionada].hasRestriccions);
+                                                    if (vm.decisions[vm.decision_seleccionada].hasRestriccions) {
+                                                        if (vm.SuccesFailDecision) {
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwo = null;
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwoSucces = response.data.id_estatus
+                                                        } else {
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwo = null;
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwoFail = response.data.id_estatus
+                                                        }
+                                                    }
+                                                    else
+                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusTwo = response.data.id_estatus;
                                                     break;
 
                                                 case 3:
-                                                    vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThree = response.data.id_estatus;
+                                                    console.log(vm.decisions[vm.decision_seleccionada].hasRestriccions);
+                                                    if (vm.decisions[vm.decision_seleccionada].hasRestriccions) {
+                                                        if (vm.SuccesFailDecision) {
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThree = null;
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThreeSucces = response.data.id_estatus
+                                                        } else {
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThree = null;
+                                                            vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThreeFail = response.data.id_estatus
+                                                        }
+                                                    }
+                                                    else
+                                                        vm.decisions[vm.decision_seleccionada].updateDecision.idNextStatusThree = response.data.id_estatus;
                                                     break;
                                             }
 

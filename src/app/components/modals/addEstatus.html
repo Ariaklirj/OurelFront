@@ -64,13 +64,29 @@
         </div>
       </div>
 
+
+      <div class="row" ng-show="vm.showSuccesFailOption" >
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>La decision seleccionada cuenta con dos resultados posible, ¿Hubo exito en la desicion anterior?
+              \n (el no seleccionar la caja implica por respuesta u No)
+              <span class="text-danger">*</span>
+            </label>
+            <input ng-disabled="vm.disableSuccesFailDecision" type="checkbox" 
+            ng-checked="vm.SuccesFailDecision" ng-change="vm.cambioSuccesFailDecision()"
+              ng-model="vm.SuccesFailDecision" id="SuccesFailDecision">
+           </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
             <label>Mas de una decision anterior conlleva a este estatus
               <span class="text-danger">*</span>
             </label>
-            <input ng-disabled="vm.disableMasDeUnaDecision" type="checkbox" ng-checked="vm.dobleDecisionAnterior" ng-change="vm.cambioDobleDecisionAnterior()"
+            <input ng-disabled="vm.disableMasDeUnaDecision" type="checkbox" 
+            ng-checked="vm.dobleDecisionAnterior" ng-change="vm.cambioDobleDecisionAnterior()"
               ng-model="vm.dobleDecisionAnterior" id="checkDobleDecisionAnterior">
           </div>
         </div>
@@ -108,6 +124,21 @@
       </div>
 
 
+
+      <div class="row" ng-show="vm.showSuccesFailOption2" >
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>La decision seleccionada cuenta con dos resultados posible, ¿Hubo exito en la desicion anterior?
+                \n (el no seleccionar la caja implica por respuesta u No)
+                <span class="text-danger">*</span>
+              </label>
+              <input ng-disabled="vm.disableSuccesFailDecision2" type="checkbox" 
+              ng-checked="vm.SuccesFailDecision2" ng-change="vm.cambioSuccesFailDecision2()"
+                ng-model="vm.SuccesFailDecisionModel2" id="SuccesFailDecision2">
+             </div>
+          </div>
+        </div>
+
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
@@ -133,8 +164,60 @@
           </div>
         </div>
       </div>
-
       <span class="error text-danger " ng-show="vm.showSpanDecisionDoble">No puede seleccionarse dos veces el mismo estatus</span>
+      
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Aumenta vitalidad (vit)?
+              <span class="text-danger">*</span>
+            </label>
+            <input  type="number" class="form-control" ng-model="vm.vitUp">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Aumenta fuerza (str)?
+              <span class="text-danger">*</span>
+            </label>
+            <input  type="number" class="form-control" ng-model="vm.strUp">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Aumenta inteligencia (int)?
+              <span class="text-danger">*</span>
+            </label>
+            <input  type="number" class="form-control" ng-model="vm.intUp">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Aumenta agilidad (agi)?
+              <span class="text-danger">*</span>
+            </label>
+            <input  type="number" class="form-control" ng-model="vm.agiUp">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Aumenta suerte (lck)?
+              <span class="text-danger">*</span>
+            </label>
+            <input  type="number" class="form-control" ng-model="vm.lckUp">
+          </div>
+        </div>
+      </div>
+
+     
     </form>
   </div>
 </div>

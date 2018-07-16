@@ -5,6 +5,7 @@
         "debug": true,
         "staging":true,
         "rest": {
+          
           "baseUrl": "http://localhost:1337"
         },
         "oauth": {
